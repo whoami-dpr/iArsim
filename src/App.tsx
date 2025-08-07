@@ -91,6 +91,27 @@ const getTheme = (mode: 'light' | 'dark') => createTheme({
         },
       },
     },
+    MuiSwitch: {
+      styleOverrides: {
+        switchBase: {
+          '&.Mui-checked': {
+            color: '#00bfff',
+            '& + .MuiSwitch-track': {
+              backgroundColor: '#00bfff',
+              opacity: 0.5,
+            },
+          },
+        },
+        track: {
+          backgroundColor: mode === 'dark' ? '#4a4a4a' : '#e0e0e0',
+        },
+        thumb: {
+          '&.Mui-checked': {
+            backgroundColor: '#00bfff',
+          },
+        },
+      },
+    },
   },
 });
 
@@ -114,36 +135,32 @@ const defaultRelativeConfig = {
   showFlags: false,
   // Content columns
   showPosition: true,
+  showCountryFlag: true,
+  showClassBadgeColor: true,
   showCarNumber: true,
   showDriverName: true,
+  showLicense: true,
+  showIRating: true,
+  showRelativeTime: true,
+  showGap: true,
+  showFastestLapTime: true,
+  showPositionsGained: true,
   showTeamName: false,
-  showIRating: false,
-  showLicense: false,
-  showCarClass: true,
-  showCarModel: false,
-  showCarColor: false,
-  showDeltaToYou: true,
-  showDeltaToLeader: false,
-  showDeltaToNext: false,
-  showDeltaToPrevious: false,
-  showLapsCompleted: false,
-  showLapsToGo: false,
-  showLapsSincePit: false,
-  showLastLapTime: true,
-  showBestLapTime: false,
-  showPitStatus: false,
-  showInPitLane: false,
-  showOnPitRoad: false,
-  showFuelLevel: false,
-  showFuelPerLap: false,
-  showFuelToFinish: false,
-  showIncidentCount: false,
-  showRelativeSpeed: false,
-  showLivePositionChange: false,
-  showFastestLapIndicator: false,
-  showCurrentFlag: false,
-  showCarStatus: false,
-  showCustomField: false,
+  showCarBrand: false,
+  showInterval: false,
+  showLastLapTime: false,
+  showLapDelta: false,
+  showPitstopStatus: false,
+  showTimeInPitlane: false,
+  showTimeInPitbox: false,
+  showCurrentStintLength: false,
+  showJokerLap: false,
+  showTireCompound: false,
+  showDriverTags: false,
+  showBlackFlag: false,
+  showAvg5Laps: false,
+  showAvg10Laps: false,
+  showPushToPass: false,
   // Header options
   showOverlayTitle: true,
   showTrackName: true,
@@ -168,6 +185,118 @@ const defaultRelativeConfig = {
   showGapToNextPrev: false,
 };
 
+// Estado para las sesiones de cada columna
+const defaultSessionConfig = {
+  // Position
+  showPosition_race: true,
+  showPosition_qualy: true,
+  showPosition_practice: true,
+  // Country flag
+  showCountryFlag_race: true,
+  showCountryFlag_qualy: true,
+  showCountryFlag_practice: true,
+  // Class badge color
+  showClassBadgeColor_race: true,
+  showClassBadgeColor_qualy: true,
+  showClassBadgeColor_practice: true,
+  // Car number
+  showCarNumber_race: true,
+  showCarNumber_qualy: true,
+  showCarNumber_practice: true,
+  // Driver name
+  showDriverName_race: true,
+  showDriverName_qualy: true,
+  showDriverName_practice: true,
+  // License
+  showLicense_race: true,
+  showLicense_qualy: true,
+  showLicense_practice: true,
+  // iRating
+  showIRating_race: true,
+  showIRating_qualy: true,
+  showIRating_practice: true,
+  // Relative time
+  showRelativeTime_race: true,
+  showRelativeTime_qualy: true,
+  showRelativeTime_practice: true,
+  // Gap
+  showGap_race: true,
+  showGap_qualy: true,
+  showGap_practice: true,
+  // Fastest lap time
+  showFastestLapTime_race: true,
+  showFastestLapTime_qualy: true,
+  showFastestLapTime_practice: true,
+  // Positions gained
+  showPositionsGained_race: true,
+  showPositionsGained_qualy: true,
+  showPositionsGained_practice: true,
+  // Team name
+  showTeamName_race: false,
+  showTeamName_qualy: false,
+  showTeamName_practice: false,
+  // Car brand
+  showCarBrand_race: false,
+  showCarBrand_qualy: false,
+  showCarBrand_practice: false,
+  // Interval
+  showInterval_race: false,
+  showInterval_qualy: false,
+  showInterval_practice: false,
+  // Last lap time
+  showLastLapTime_race: false,
+  showLastLapTime_qualy: false,
+  showLastLapTime_practice: false,
+  // Lap delta
+  showLapDelta_race: false,
+  showLapDelta_qualy: false,
+  showLapDelta_practice: false,
+  // Pitstop status
+  showPitstopStatus_race: false,
+  showPitstopStatus_qualy: false,
+  showPitstopStatus_practice: false,
+  // Time in pitlane
+  showTimeInPitlane_race: false,
+  showTimeInPitlane_qualy: false,
+  showTimeInPitlane_practice: false,
+  // Time in pitbox
+  showTimeInPitbox_race: false,
+  showTimeInPitbox_qualy: false,
+  showTimeInPitbox_practice: false,
+  // Current stint length
+  showCurrentStintLength_race: false,
+  showCurrentStintLength_qualy: false,
+  showCurrentStintLength_practice: false,
+  // Joker lap
+  showJokerLap_race: false,
+  showJokerLap_qualy: false,
+  showJokerLap_practice: false,
+  // Tire compound
+  showTireCompound_race: false,
+  showTireCompound_qualy: false,
+  showTireCompound_practice: false,
+  // Driver tags
+  showDriverTags_race: false,
+  showDriverTags_qualy: false,
+  showDriverTags_practice: false,
+  // Black flag
+  showBlackFlag_race: false,
+  showBlackFlag_qualy: false,
+  showBlackFlag_practice: false,
+  // AVG 5 laps
+  showAvg5Laps_race: false,
+  showAvg5Laps_qualy: false,
+  showAvg5Laps_practice: false,
+  // AVG 10 laps
+  showAvg10Laps_race: false,
+  showAvg10Laps_qualy: false,
+  showAvg10Laps_practice: false,
+  // Push to pass
+  showPushToPass_race: false,
+  showPushToPass_qualy: false,
+  showPushToPass_practice: false,
+};
+
 function useLocalStorageState<T>(key: string, defaultValue: T): [T, React.Dispatch<React.SetStateAction<T>>] {
   const [value, setValue] = React.useState<T>(() => {
     const stored = localStorage.getItem(key);
@@ -183,13 +312,51 @@ interface RelativeConfigPanelProps { mode: 'light' | 'dark'; }
 const RelativeConfigPanel: React.FC<RelativeConfigPanelProps> = ({ mode }) => {
   const [tab, setTab] = React.useState<number>(0);
   const [config, setConfig] = useLocalStorageState<typeof defaultRelativeConfig>('relativeConfig', defaultRelativeConfig);
+  const [sessionConfig, setSessionConfig] = useLocalStorageState<typeof defaultSessionConfig>('relativeSessionConfig', defaultSessionConfig);
   const [visible, setVisible] = React.useState(() => {
     const stored = localStorage.getItem('relativeVisible');
     return stored ? JSON.parse(stored) : true;
   });
+  
+
+  
   React.useEffect(() => {
     localStorage.setItem('relativeVisible', JSON.stringify(visible));
   }, [visible]);
+
+  // Sincronización inicial de switches principales basada en las sesiones
+  React.useEffect(() => {
+    const contentKeys = [
+      'showPosition', 'showCountryFlag', 'showClassBadgeColor', 'showCarNumber', 'showDriverName', 'showLicense',
+      'showIRating', 'showRelativeTime', 'showGap', 'showFastestLapTime', 'showPositionsGained', 'showTeamName',
+      'showCarBrand', 'showInterval', 'showLastLapTime', 'showLapDelta', 'showPitstopStatus', 'showTimeInPitlane',
+      'showTimeInPitbox', 'showCurrentStintLength', 'showJokerLap', 'showTireCompound', 'showDriverTags',
+      'showBlackFlag', 'showAvg5Laps', 'showAvg10Laps', 'showPushToPass'
+    ];
+    
+    const updatedConfig = { ...config };
+    let hasChanges = false;
+    
+    contentKeys.forEach(key => {
+      const allSessions = ['race', 'qualy', 'practice'];
+      const hasActiveSession = allSessions.some(session => {
+        const sessionKey = `${key}_${session}` as keyof typeof sessionConfig;
+        return sessionConfig[sessionKey];
+      });
+      
+      if (hasActiveSession && !updatedConfig[key as keyof typeof updatedConfig]) {
+        (updatedConfig as any)[key] = true;
+        hasChanges = true;
+      } else if (!hasActiveSession && updatedConfig[key as keyof typeof updatedConfig]) {
+        (updatedConfig as any)[key] = false;
+        hasChanges = true;
+      }
+    });
+    
+    if (hasChanges) {
+      setConfig(updatedConfig);
+    }
+  }, [sessionConfig, config]);
 
   // Handler para switches
   const handleSwitch = (field: keyof typeof defaultRelativeConfig) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -224,16 +391,17 @@ const RelativeConfigPanel: React.FC<RelativeConfigPanelProps> = ({ mode }) => {
         boxShadow: 'none',
       }}
     >
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-        <Typography variant="h5" color="text.primary" sx={{ fontWeight: 700, flexGrow: 1 }}>
-          Relative
-        </Typography>
-        <FormControlLabel
-          control={<Switch checked={visible} onChange={e => setVisible(e.target.checked)} color="primary" />}
-          label="Visible"
-          sx={{ ml: 2 }}
-        />
-      </Box>
+             <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+         <Typography variant="h5" color="text.primary" sx={{ fontWeight: 700, flexGrow: 1 }}>
+           Relative
+         </Typography>
+         <FormControlLabel
+           control={<Switch checked={visible} onChange={e => setVisible(e.target.checked)} color="primary" />}
+           label="Visible"
+           sx={{ ml: 2 }}
+         />
+         
+       </Box>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
         The relative overlay show the other drivers around you.
       </Typography>
@@ -352,44 +520,209 @@ const RelativeConfigPanel: React.FC<RelativeConfigPanelProps> = ({ mode }) => {
           </FormGroup>
         </>
       )}
-      {tab === 1 && (
-        <MuiBox sx={{ p: 2, color: 'text.secondary' }}>
-          <Typography variant="subtitle1" sx={{ mb: 1 }}>Content columns</Typography>
-          <FormGroup sx={{ flexDirection: 'column', gap: 1 }}>
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showPosition} onChange={handleSwitch('showPosition')} />} label="Position" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showCarNumber} onChange={handleSwitch('showCarNumber')} />} label="Car number" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showDriverName} onChange={handleSwitch('showDriverName')} />} label="Driver name" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showTeamName} onChange={handleSwitch('showTeamName')} />} label="Team name" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showIRating} onChange={handleSwitch('showIRating')} />} label="iRating" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showLicense} onChange={handleSwitch('showLicense')} />} label="License" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showCarClass} onChange={handleSwitch('showCarClass')} />} label="Car class" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showCarModel} onChange={handleSwitch('showCarModel')} />} label="Car model" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showCarColor} onChange={handleSwitch('showCarColor')} />} label="Car color/class color" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showDeltaToYou} onChange={handleSwitch('showDeltaToYou')} />} label="Delta to you" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showDeltaToLeader} onChange={handleSwitch('showDeltaToLeader')} />} label="Delta to leader" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showDeltaToNext} onChange={handleSwitch('showDeltaToNext')} />} label="Delta to next" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showDeltaToPrevious} onChange={handleSwitch('showDeltaToPrevious')} />} label="Delta to previous" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showLapsCompleted} onChange={handleSwitch('showLapsCompleted')} />} label="Laps completed" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showLapsToGo} onChange={handleSwitch('showLapsToGo')} />} label="Laps to go" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showLapsSincePit} onChange={handleSwitch('showLapsSincePit')} />} label="Laps since pit" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showLastLapTime} onChange={handleSwitch('showLastLapTime')} />} label="Last lap time" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showBestLapTime} onChange={handleSwitch('showBestLapTime')} />} label="Best lap time" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showPitStatus} onChange={handleSwitch('showPitStatus')} />} label="Pit status" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showInPitLane} onChange={handleSwitch('showInPitLane')} />} label="In pit lane" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showOnPitRoad} onChange={handleSwitch('showOnPitRoad')} />} label="On pit road" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showFuelLevel} onChange={handleSwitch('showFuelLevel')} />} label="Fuel level" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showFuelPerLap} onChange={handleSwitch('showFuelPerLap')} />} label="Fuel per lap" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showFuelToFinish} onChange={handleSwitch('showFuelToFinish')} />} label="Fuel to finish" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showIncidentCount} onChange={handleSwitch('showIncidentCount')} />} label="Incident count" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showRelativeSpeed} onChange={handleSwitch('showRelativeSpeed')} />} label="Relative speed" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showLivePositionChange} onChange={handleSwitch('showLivePositionChange')} />} label="Position change (live)" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showFastestLapIndicator} onChange={handleSwitch('showFastestLapIndicator')} />} label="Fastest lap indicator" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showCurrentFlag} onChange={handleSwitch('showCurrentFlag')} />} label="Flag (current)" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showCarStatus} onChange={handleSwitch('showCarStatus')} />} label="Car status (running, out, DQ, etc.)" />
-            <MuiFormControlLabel control={<MuiSwitch checked={config.showCustomField} onChange={handleSwitch('showCustomField')} />} label="Custom field" />
-          </FormGroup>
-        </MuiBox>
-      )}
+             {tab === 1 && (
+         <MuiBox sx={{ p: 2, color: 'text.secondary' }}>
+           <Typography variant="subtitle1" sx={{ mb: 2, color: 'text.primary', fontWeight: 600 }}>Content columns</Typography>
+           
+                       {/* Content items with switches and session checkboxes */}
+            {[
+              { key: 'showPosition', label: 'Position', hasSettings: true },
+              { key: 'showCountryFlag', label: 'Country flag', hasSettings: false },
+              { key: 'showClassBadgeColor', label: 'Class badge color', hasSettings: false },
+              { key: 'showCarNumber', label: 'Car number', hasSettings: true },
+              { key: 'showDriverName', label: 'Driver name', hasSettings: true },
+              { key: 'showLicense', label: 'License', hasSettings: true },
+              { key: 'showIRating', label: 'iRating', hasSettings: true },
+              { key: 'showRelativeTime', label: 'Relative time', hasSettings: true },
+              { key: 'showGap', label: 'Gap', hasSettings: true },
+              { key: 'showFastestLapTime', label: 'Fastest lap time', hasSettings: true },
+              { key: 'showPositionsGained', label: 'Positions gained', hasSettings: false },
+              { key: 'showTeamName', label: 'Team name', hasSettings: true },
+              { key: 'showCarBrand', label: 'Car brand', hasSettings: true },
+              { key: 'showInterval', label: 'Interval', hasSettings: true },
+              { key: 'showLastLapTime', label: 'Last lap time', hasSettings: true },
+              { key: 'showLapDelta', label: 'Lap delta', hasSettings: true },
+              { key: 'showPitstopStatus', label: 'Pitstop status', hasSettings: false },
+              { key: 'showTimeInPitlane', label: 'Time in pitlane', hasSettings: false },
+              { key: 'showTimeInPitbox', label: 'Time in pitbox', hasSettings: false },
+              { key: 'showCurrentStintLength', label: 'Current stint length', hasSettings: false },
+              { key: 'showJokerLap', label: 'Joker lap', hasSettings: false },
+              { key: 'showTireCompound', label: 'Tire compound', hasSettings: false },
+              { key: 'showDriverTags', label: 'Driver tags', hasSettings: false },
+              { key: 'showBlackFlag', label: 'Black flag', hasSettings: false },
+              { key: 'showAvg5Laps', label: 'AVG 5 laps', hasSettings: false },
+              { key: 'showAvg10Laps', label: 'AVG 10 laps', hasSettings: false },
+              { key: 'showPushToPass', label: 'Push to pass', hasSettings: false },
+            ].map((item, index) => (
+             <Box key={item.key} sx={{ 
+               display: 'flex', 
+               alignItems: 'center', 
+               py: 2,
+               px: 2,
+                               borderBottom: index < 27 ? '1px solid' : 'none',
+               borderColor: mode === 'dark' ? '#333' : '#e0e0e0',
+               '&:hover': {
+                 backgroundColor: mode === 'dark' ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.02)',
+               },
+             }}>
+                               {/* Toggle Switch */}
+                                 <Box 
+                                       onClick={() => {
+                      setConfig(prevConfig => {
+                        const newValue = !prevConfig[item.key as keyof typeof prevConfig];
+                        
+                        // Si se está activando el switch principal, activar al menos una sesión si no hay ninguna
+                        if (newValue) {
+                          const allSessions = ['race', 'qualy', 'practice'];
+                          const hasActiveSession = allSessions.some(session => {
+                            const key = `${item.key}_${session}` as keyof typeof sessionConfig;
+                            return sessionConfig[key];
+                          });
+                          
+                          if (!hasActiveSession) {
+                            // Activar la primera sesión (race) por defecto
+                            setSessionConfig(prevSessionConfig => ({
+                              ...prevSessionConfig,
+                              [`${item.key}_race`]: true
+                            }));
+                          }
+                        }
+                        
+                        return {
+                          ...prevConfig,
+                          [item.key]: newValue
+                        };
+                      });
+                    }}
+                  sx={{ 
+                    position: 'relative',
+                    width: 48,
+                    height: 24,
+                    borderRadius: 12,
+                    backgroundColor: config[item.key as keyof typeof config] ? '#00bfff' : (mode === 'dark' ? '#4a4a4a' : '#e0e0e0'),
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    mr: 3,
+                  }}
+                >
+                  {/* Thumb */}
+                  <Box sx={{ 
+                    position: 'absolute',
+                    top: 2,
+                    left: config[item.key as keyof typeof config] ? 22 : 2,
+                    width: 20,
+                    height: 20,
+                    borderRadius: '50%',
+                    backgroundColor: '#fff',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
+                    transition: 'all 0.2s ease',
+                  }} />
+                </Box>
+                
+                {/* Label */}
+                <Typography sx={{ 
+                  flexGrow: 1, 
+                  color: mode === 'dark' ? '#fff' : '#000',
+                  fontWeight: config[item.key as keyof typeof config] ? 500 : 400,
+                  fontSize: '0.9rem',
+                }}>
+                  {item.label}
+                </Typography>
+                
+                {/* Settings link */}
+                {item.hasSettings && (
+                  <Typography sx={{ 
+                    color: '#00bfff',
+                    fontSize: '0.8rem',
+                    textDecoration: 'underline',
+                    cursor: 'pointer',
+                    mr: 2,
+                    '&:hover': {
+                      color: '#0099cc',
+                    },
+                  }}>
+                    settings
+                  </Typography>
+                )}
+                
+                {/* Session Checkboxes */}
+                <Box sx={{ display: 'flex', gap: 2 }}>
+                  {['race', 'qualy', 'practice'].map((session) => {
+                    const sessionKey = `${item.key}_${session}` as keyof typeof sessionConfig;
+                    const isEnabled = sessionConfig[sessionKey];
+                    
+                    return (
+                      <Box key={session} sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                                                 <Box 
+                                                       onClick={() => {
+                              setSessionConfig(prevConfig => {
+                                const newConfig = {
+                                  ...prevConfig,
+                                  [sessionKey]: !prevConfig[sessionKey]
+                                };
+                                
+                                // Verificar si todos los checkboxes están desactivados
+                                const allSessions = ['race', 'qualy', 'practice'];
+                                const allDisabled = allSessions.every(session => {
+                                  const key = `${item.key}_${session}` as keyof typeof sessionConfig;
+                                  return !newConfig[key];
+                                });
+                                
+                                // Si todos están desactivados, desactivar el switch principal
+                                if (allDisabled) {
+                                  setConfig(prevConfig => ({
+                                    ...prevConfig,
+                                    [item.key]: false
+                                  }));
+                                }
+                                
+                                return newConfig;
+                              });
+                            }}
+                          sx={{ 
+                            width: 16, 
+                            height: 16, 
+                            borderRadius: 0, // Cuadrado
+                            backgroundColor: isEnabled ? '#00bfff' : 'transparent',
+                            border: '2px solid',
+                            borderColor: isEnabled ? '#00bfff' : (mode === 'dark' ? '#666' : '#ccc'),
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            position: 'relative',
+                            transition: 'all 0.2s ease',
+                            '&:hover': {
+                              borderColor: isEnabled ? '#0099cc' : '#999',
+                            },
+                          }}
+                        >
+                          {/* Checkmark */}
+                          {isEnabled && (
+                            <Box sx={{
+                              width: 8,
+                              height: 8,
+                              backgroundColor: '#000',
+                              borderRadius: 0, // Cuadrado
+                            }} />
+                          )}
+                        </Box>
+                        <Typography sx={{ 
+                          fontSize: '0.8rem', 
+                          color: mode === 'dark' ? '#fff' : '#000',
+                          textTransform: 'capitalize',
+                          fontWeight: 400
+                        }}>
+                          {session}
+                        </Typography>
+                      </Box>
+                    );
+                  })}
+                </Box>
+             </Box>
+           ))}
+         </MuiBox>
+       )}
       {tab === 2 && (
         <MuiBox sx={{ p: 2, color: 'text.secondary' }}>
           <Typography variant="subtitle1" sx={{ mb: 1 }}>Header options</Typography>
@@ -446,24 +779,48 @@ const App: React.FC = () => {
 
   const drawer = (
     <Box sx={{ px: { xs: 1, sm: 2.5 }, pb: 2 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 1, mb: 1 }}>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={mode === 'dark'}
-              onChange={() => setMode(mode === 'dark' ? 'light' : 'dark')}
-              color="primary"
-              icon={<LightModeIcon />}
-              checkedIcon={<DarkModeIcon />}
-            />
-          }
-          label={mode === 'dark' ? 'Dark' : 'Light'}
-          labelPlacement="start"
-          sx={{
-            '.MuiFormControlLabel-label': { fontWeight: 600, color: 'text.primary' },
-          }}
-        />
-      </Box>
+                    <Box sx={{ 
+          display: 'flex', 
+          justifyContent: 'flex-start', 
+          alignItems: 'center', 
+          pt: 1, 
+          mb: 1,
+          pl: 2,
+        }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Typography variant="body2" color="text.primary" sx={{ fontWeight: 500 }}>
+              Switch theme
+            </Typography>
+            <Box 
+              onClick={() => setMode(mode === 'dark' ? 'light' : 'dark')}
+              sx={{ 
+                position: 'relative',
+                width: 48,
+                height: 24,
+                borderRadius: 12,
+                backgroundColor: mode === 'dark' ? '#00bfff' : '#e0e0e0',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                '&:hover': {
+                  backgroundColor: mode === 'dark' ? '#0099cc' : '#d0d0d0',
+                },
+              }}
+            >
+              {/* Thumb */}
+              <Box sx={{ 
+                position: 'absolute',
+                top: 2,
+                left: mode === 'dark' ? 22 : 2,
+                width: 20,
+                height: 20,
+                borderRadius: '50%',
+                backgroundColor: mode === 'dark' ? '#fff' : '#fff',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
+                transition: 'all 0.2s ease',
+              }} />
+            </Box>
+          </Box>
+        </Box>
       <Typography variant="overline" sx={{ mb: 1, display: 'block', letterSpacing: 2, fontWeight: 700, color: theme.palette.text.secondary }}>
         OVERLAYS
       </Typography>

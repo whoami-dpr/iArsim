@@ -6,6 +6,9 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
+// Habilitar el módulo remote para comunicación entre procesos
+require('@electron/remote/main').initialize();
+
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -13,6 +16,8 @@ const createWindow = () => {
     height: 600,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+      nodeIntegration: true,
+      contextIsolation: false,
     },
   });
 
@@ -35,9 +40,30 @@ const createRelativeOverlay = () => {
     skipTaskbar: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true,
+      contextIsolation: false,
     },
   });
-  overlayWindow.setIgnoreMouseEvents(false); // El usuario puede interactuar
+  
+  // Habilitar remote para esta ventana
+  require('@electron/remote/main').enable(overlayWindow.webContents);
+  
+  // Configuración mejorada para el manejo de eventos del mouse
+  overlayWindow.setIgnoreMouseEvents(true, { forward: true });
+  
+  // Permitir interacción solo cuando el mouse está sobre el overlay
+  overlayWindow.webContents.on('dom-ready', () => {
+    overlayWindow.webContents.executeJavaScript(`
+      document.addEventListener('mouseenter', () => {
+        require('@electron/remote').getCurrentWindow().setIgnoreMouseEvents(false);
+      });
+      
+      document.addEventListener('mouseleave', () => {
+        require('@electron/remote').getCurrentWindow().setIgnoreMouseEvents(true, { forward: true });
+      });
+    `);
+  });
+  
   overlayWindow.loadFile(path.join(__dirname, 'relative.html'));
   // overlayWindow.webContents.openDevTools(); // Descomentar para debug
 };
